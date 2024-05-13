@@ -42,9 +42,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_library_index') }}" class="btn btn-primary">Volver al listado</a>
+    <a href="{{ path('showLibraries') }}" class="btn btn-primary">Volver al listado</a>
 
-    <a href="{{ path('app_library_edit', {'id': library.id}) }}" class="btn btn-warning">Editar</a>
-
-    {{ include('admin/admin-library/_delete_form.html.twig') }}
 {% endblock %}

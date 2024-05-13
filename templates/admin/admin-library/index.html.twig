@@ -3,8 +3,8 @@
 {% block title %}Gestión Bibliotecas{% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
-        <h1>Library index</h1>
+
+        <h1>Listado de bibliotecas</h1>
 
         <table class="table">
             <thead>
@@ -32,8 +32,8 @@
                     <td>{{ library.foundationDate ? library.foundationDate|date('Y-m-d') : '' }}</td>
                     <td>{{ library.libraryRules }}</td>
                     <td>
-                        <a href="{{ path('app_library_show', {'id': library.id}) }}">show</a>
-                        <a href="{{ path('app_library_edit', {'id': library.id}) }}">edit</a>
+                        <a href="{{ path('app_library_show', {'id': library.id}) }}" class="btn btn-primary">Mostrar</a>
+                        <a href="{{ path('app_library_edit', {'id': library.id}) }}" class="btn btn-warning">Editar</a>
                     </td>
                 </tr>
             {% else %}
@@ -44,6 +44,6 @@
             </tbody>
         </table>
 
-        <a href="{{ path('app_library_new') }}">Create new</a>
-    </div>
+        <a href="{{ path('app_library_new') }}" class="btn btn-success">Nuevo registro</a>
+
 {% endblock %}
