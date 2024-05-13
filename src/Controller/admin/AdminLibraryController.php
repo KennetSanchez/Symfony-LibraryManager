@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\admin;
 
 use App\Entity\Library;
 use App\Form\LibraryType;
@@ -11,13 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/library')]
-class LibraryController extends AbstractController
+#[Route('/admin/library')]
+class AdminLibraryController extends AbstractController
 {
     #[Route('/', name: 'app_library_index', methods: ['GET'])]
     public function index(LibraryRepository $libraryRepository): Response
     {
-        return $this->render('library/index.html.twig', [
+        return $this->render('admin/admin-library/index.html.twig', [
             'libraries' => $libraryRepository->findAll(),
         ]);
     }
@@ -36,7 +36,7 @@ class LibraryController extends AbstractController
             return $this->redirectToRoute('app_library_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('library/new.html.twig', [
+        return $this->render('admin/admin-library/new.html.twig', [
             'library' => $library,
             'form' => $form,
         ]);
@@ -45,7 +45,7 @@ class LibraryController extends AbstractController
     #[Route('/{id}', name: 'app_library_show', methods: ['GET'])]
     public function show(Library $library): Response
     {
-        return $this->render('library/show.html.twig', [
+        return $this->render('admin/admin-library/show.html.twig', [
             'library' => $library,
         ]);
     }
@@ -62,7 +62,7 @@ class LibraryController extends AbstractController
             return $this->redirectToRoute('app_library_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('library/edit.html.twig', [
+        return $this->render('admin/admin-library/edit.html.twig', [
             'library' => $library,
             'form' => $form,
         ]);
