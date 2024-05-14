@@ -13,21 +13,13 @@
         <header>
             <div class="navbar navbar-dark bg-success shadow-sm">
                 <div class="container">
-                    <a href="/" class="navbar-brand d-flex align-items-center"><strong>Gestión Bibliotecas</strong></a>
+                    <a href="{{ path('index') }}" class="navbar-brand d-flex align-items-center"><strong>Gestión Bibliotecas</strong></a>
                     <div class="dropdown">
-                        <a href="/" class="btn text-white" >Inicio</a>
-                        <a class="btn text-white light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            Administración
-                        </a>
-
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="/admin/library/">Administrar bibliotecas</a></li>
-                            <li><a class="dropdown-item" href="#">Administrar libros</a></li>
-                        </ul>
+                        <a href="{{ path('index') }}" class="btn text-white" >Inicio</a>
+                        <a class="btn text-white" href="{{ path('indexAdminLibraries') }}" >Administrar bibliotecas</a>
+                        <a class="btn text-white" href="#">Administrar libros</a>
                     </div>
                 </div>
-
-
             </div>
         </header>
 

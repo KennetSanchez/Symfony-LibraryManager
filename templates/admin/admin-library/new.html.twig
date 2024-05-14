@@ -3,9 +3,9 @@
 {% block title %}New Library{% endblock %}
 
 {% block body %}
-    <h1>Create new Library</h1>
+    <h1 class="mb-4">Registrar nueva biblioteca</h1>
 
     {{ include('admin/admin-library/_form.html.twig') }}
 
-    <a href="{{ path('app_library_index') }}">back to list</a>
+    <a href="{{ path('indexAdminLibraries') }}" class="btn btn-secondary" >Volver al listado</a>
 {% endblock %}

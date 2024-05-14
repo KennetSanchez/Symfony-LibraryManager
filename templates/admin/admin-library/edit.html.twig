@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Library{% endblock %}
+{% block title %}Editar biblioteca{% endblock %}
 
 {% block body %}
-    <h1>Edit Library</h1>
+    <h1>Editar biblioteca</h1>
+    <div >
+        {{ include('admin/admin-library/_form.html.twig', {'button_label': 'Actualizar'}) }}
 
-    {{ include('admin/admin-library/_form.html.twig', {'button_label': 'Update'}) }}
+        <a href="{{ path('indexAdminLibraries') }}" class="btn btn-secondary">Volver al listado</a>
+    </div>
 
-    <a href="{{ path('app_library_index') }}">back to list</a>
 
-    {{ include('admin/admin-library/_delete_form.html.twig') }}
+
+
 {% endblock %}
