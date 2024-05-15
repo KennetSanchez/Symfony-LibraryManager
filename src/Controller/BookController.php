@@ -7,6 +7,7 @@ use App\Form\BookType;
 use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use ErrorException;
+use PhpParser\Builder\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,11 +31,25 @@ class BookController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}', name: 'app_book_find_with_id', methods: ['GET'])]
+    public function findById(BookRepository $bookRepository, string $id): Response
+    {
+        return $this->render('book/show.html.twig', [
+            'searchType' => 'Libro con id: '.$id,
+            'books' => $bookRepository->findBy([
+                'id' => $id
+            ])
+        ]);
+    }
+
     #[Route('/new', name: 'app_book_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $book = new Book();
-        $form = $this->createForm(BookType::class, $book);
+        $form = $this->createForm(BookType::class, $book, [
+            'method' => 'POST',
+        ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -50,11 +65,26 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_book_edit', methods: ['PUT'])]
+    #[Route('/{id}', name: 'app_book_delete', methods: ['POST', 'DELETE'])]
+    public function delete(Request $request, Book $book, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$book->getId(), $request->getPayload()->get('_token'))) {
+            $entityManager->remove($book);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/edit', name: 'app_book_edit', methods: ['GET', 'PUT'])]
     public function edit(Request $request, Book $book, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(BookType::class, $book);
+        $form = $this->createForm(BookType::class, $book, [
+            'method' => 'PUT',
+        ]);
+
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -66,17 +96,6 @@ class BookController extends AbstractController
             'book' => $book,
             'form' => $form,
         ]);
-    }
-
-    #[Route('/{id}', name: 'app_book_delete', methods: ['DELETE'])]
-    public function delete(Request $request, Book $book, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$book->getId(), $request->getPayload()->get('_token'))) {
-            $entityManager->remove($book);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/library', name: 'app_book_find_with_library', methods: ['GET'])]
