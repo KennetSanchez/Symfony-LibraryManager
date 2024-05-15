@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Libros con disponibilidad{% endblock %}
+
+{% block body %}
+    <h1>{{ searchTitle }}</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Synopsis</th>
+            <th>PublishDate</th>
+            <th>Publisher</th>
+            <th>ISBN</th>
+            <th>Copies</th>
+            <th>Nombre biblioteca</th>
+            <th>Dirección biblioteca</th>
+            <th>Horario apertura</th>
+            <th>Horario cierre</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for result in queryResult %}
+            <tr>
+                <td>{{ result.id }}</td>
+                <td>{{ result.title }}</td>
+                <td>{{ result.author }}</td>
+                <td>{{ result.synopsis }}</td>
+                <td>{{ result.publishDate ? result.publishDate|date('Y-m-d') : '' }}</td>
+                <td>{{ result.publisher }}</td>
+                <td>{{ result.ISBN }}</td>
+                <td>{{ result.copies }}</td>
+                <td>{{ result.library.name }}</td>
+                <td>{{ result.library.address }}</td>
+                <td>{{ result.library.openTime is empty ? "" : result.library.openTime | date("H:i") }}</td>
+                <td>{{ result.library.closeTime is empty ? "" : result.library.closeTime| date("H:i") }}</td>
+                <td>
+                    <a href="{{ path('app_book_find_with_title', {'title': result.title}) }}">show</a>
+                    <a href="{{ path('app_book_edit', {'id': result.id}) }}">edit</a>
+                </td>
+
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">No hay libros disponibles con el título proporcionado</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    {#    <a href="{{ path('app_book_index') }}">back to list</a>#}
+
+    {#    #}
+
+    {#    {{ include('book/_delete_form.html.twig') }}#}
+{% endblock %}
