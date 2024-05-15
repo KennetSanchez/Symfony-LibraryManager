@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,21 +27,18 @@ class BookType extends AbstractType
                 'required' => true,
                 'empty_data' => 'Fernando Vallejo Rendón'
             ])
-            ->add('synopsis', TextType::class, [
+            ->add('synopsis', TextareaType::class, [
                 'required' => true,
                 'empty_data' => 'Novela que narra la vida del autor desde que se mudó a México'
             ])
             ->add('publishDate', DateType::class, [
                 'widget' => 'single_text',
-                'empty_data' => [
-                    'year' => '1993', 'month' => '03', 'day' => '27',
-                ],
             ])
             ->add('publisher', TextType::class, [
                 'required' => true,
                 'empty_data' => 'Alfaguara'
             ])
-            ->add('ISBN', TextType::class, [
+            ->add('ISBN', IntegerType::class, [
                 'required' => true,
                 'empty_data' => '958-614-378-3'
             ])

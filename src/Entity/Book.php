@@ -3,8 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\BookRepository;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
@@ -12,31 +14,62 @@ class Book
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Assert\NotNull]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 05,
+        max: 255,
+        minMessage: 'El título debe tener al menos {{ limit }} caracteres',
+        maxMessage: 'El título debe tener máximo {{ limit }} caracteres')]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 05,
+        max: 255,
+        minMessage: 'El autor debe tener al menos {{ limit }} caracteres',
+        maxMessage: 'El autor debe tener máximo {{ limit }} caracteres')]
     private ?string $author = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 30,
+        max: 255,
+        minMessage: 'La sinópsis debe tener al menos {{ limit }} caracteres',
+        maxMessage: 'La sinópsis debe tener máximo {{ limit }} caracteres')]
     private ?string $synopsis = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $publishDate = null;
+    #[Assert\NotNull]
+    private ?DateTimeInterface $publishDate = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 05,
+        max: 255,
+        minMessage: 'La editorial debe tener al menos {{ limit }} caracteres',
+        maxMessage: 'La editorial debe tener máximo {{ limit }} caracteres')]
     private ?string $publisher = null;
 
     #[ORM\Column(length: 13)]
+    #[Assert\NotBlank]
+    #[Assert\Isbn(bothIsbnMessage: 'El código ISBN debe ser válido, puede tener 10 o 13 dígitos.')]
     private ?string $ISBN = null;
 
     #[ORM\Column]
+    #[Assert\NotNull]
     private ?int $copies = null;
 
     #[ORM\ManyToOne(inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Valid]
     private ?Library $library = null;
 
     public function getId(): ?int
@@ -80,12 +113,12 @@ class Book
         return $this;
     }
 
-    public function getPublishDate(): ?\DateTimeInterface
+    public function getPublishDate(): ?DateTimeInterface
     {
         return $this->publishDate;
     }
 
-    public function setPublishDate(\DateTimeInterface $publishDate): static
+    public function setPublishDate(DateTimeInterface $publishDate): static
     {
         $this->publishDate = $publishDate;
 
