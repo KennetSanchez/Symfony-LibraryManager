@@ -1,40 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ library.name }}{% endblock %}
+{% block title %}Library{% endblock %}
 
 {% block body %}
-    <h1>{{ library.name }}</h1>
+    <h1>Library</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Dirección</th>
+                <th>Id</th>
+                <td>{{ library.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ library.name }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
                 <td>{{ library.address }}</td>
             </tr>
             <tr>
-                <th>Ciudad</th>
+                <th>City</th>
                 <td>{{ library.city }}</td>
             </tr>
             <tr>
-                <th>Hora de apertura</th>
+                <th>OpenTime</th>
                 <td>{{ library.openTime ? library.openTime|date('H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Hora de cierre</th>
+                <th>CloseTime</th>
                 <td>{{ library.closeTime ? library.closeTime|date('H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Fecha de fundación</th>
+                <th>FoundationDate</th>
                 <td>{{ library.foundationDate ? library.foundationDate|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>Normas de biblioteca</th>
+                <th>LibraryRules</th>
                 <td>{{ library.libraryRules }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('index') }}" class="btn btn-secondary">Volver al listado</a>
-    <a href="{{ path('showLibraryBooks', { 'id': library.id }) }}" class="btn btn-primary" >Ver libros</a>
+    <a href="{{ path('indexAdminLibraries') }}" class="btn btn-secondary">Volver al listado</a>
 
+    <a href="{{ path('editLibrary', {'id': library.id}) }}" class="btn btn-warning">Editar</a>
+
+    {{ include('admin/admin-library/_delete_form.html.twig') }}
 {% endblock %}

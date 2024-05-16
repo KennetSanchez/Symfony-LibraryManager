@@ -40,4 +40,15 @@ class LibraryRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+    public function findOneByName($value): ?Library
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.name = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

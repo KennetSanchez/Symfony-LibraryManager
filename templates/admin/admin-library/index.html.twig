@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestión Bibliotecas{% endblock %}
+
+{% block body %}
+
+        <h1 class="mb-5">Listado de bibliotecas</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Ciudad</th>
+                <th>Hora de apertura</th>
+                <th>Hora de cierre</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for library in libraries %}
+                <tr>
+                    <td>{{ library.name }}</td>
+                    <td>{{ library.address }}</td>
+                    <td>{{ library.city }}</td>
+                    <td>{{ library.openTime ? library.openTime|date('H:i:s') : '' }}</td>
+                    <td>{{ library.closeTime ? library.closeTime|date('H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('showAdminLibraryById', {'id': library.id}) }}" class="btn btn-primary">Mostrar</a>
+                        <a href="{{ path('editLibrary', {'id': library.id}) }}" class="btn btn-warning">Editar</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">No existen registros</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('newLibrary') }}" class="btn btn-success">Nuevo registro</a>
+
+{% endblock %}
