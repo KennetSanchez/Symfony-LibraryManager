@@ -3,9 +3,13 @@
 {% block title %}Bibliotecas{% endblock %}
 
 {% block body %}
+    <div style="width: 300px;">
+        {{ form(form) }}
+    </div>
+
+
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
-
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {% for library in libraries %}
                     <!-- Item nº1 -->
@@ -25,8 +29,6 @@
                     </div>
                 {% endfor %}
             </div>
-
-
         </div>
     </div>
 {% endblock %}

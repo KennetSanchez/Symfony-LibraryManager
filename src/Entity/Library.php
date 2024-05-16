@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: LibraryRepository::class)]
 class Library
@@ -19,6 +20,10 @@ class Library
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[Assert\Regex(
+        pattern: '/\w+ [0-9]/',
+        message: 'Dirección incorrecta'
+    )]
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 

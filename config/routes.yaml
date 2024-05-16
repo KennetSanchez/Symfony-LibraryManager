@@ -7,7 +7,7 @@ controllers:
 # Rutas de Biblioteca
 index:
     path: /
-    methods: [GET]
+    methods: [GET, POST]
     controller: App\Controller\LibraryController::index
 
 showLibraryById:
@@ -17,9 +17,12 @@ showLibraryById:
     requirements:
         id: \d+
 
-#showLibraryByName:
-    #path: /library/
-    #controller: App\Controller\LibraryController::showLibraryByName
+showLibraryBooks:
+    path: /library/{id}/books
+    methods: [GET]
+    controller: App\Controller\LibraryController::showLibraryBooks
+    requirements:
+        id: \d+
 
 indexAdminLibraries:
     path: /admin/library/
