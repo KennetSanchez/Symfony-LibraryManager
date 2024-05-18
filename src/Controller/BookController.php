@@ -7,14 +7,11 @@ use App\Form\BookType;
 use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use ErrorException;
-use PhpParser\Builder\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/books')]
 class BookController extends AbstractController
@@ -25,16 +22,14 @@ class BookController extends AbstractController
         return json_decode($content);
     }
 
-    #[Route('/', name: 'app_book_index', methods: ['GET'])]
-    public function index(BookRepository $bookRepository): Response
+    public function booksIndex(BookRepository $bookRepository): Response
     {
         return $this->render('book/index.html.twig', [
             'books' => $bookRepository->findAll(),
         ]);
     }
 
-    #[Route('/new', name: 'app_book_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function newBook(Request $request, EntityManagerInterface $entityManager): Response
     {
         $book = new Book();
         $form = $this->createForm(BookType::class, $book, [
@@ -56,8 +51,6 @@ class BookController extends AbstractController
         ]);
     }
 
-
-    #[Route('/library', name: 'app_book_find_with_library', methods: ['GET'])]
     public function findByLibrary(BookRepository $bookRepository, Request $request): Response
     {
         $decoded = $this->decodeRequest($request);
@@ -74,8 +67,6 @@ class BookController extends AbstractController
         }
     }
 
-
-    #[Route('/title', name: 'app_book_find_with_title', methods: ['GET'], format: 'json')]
     public function findByTitle(BookRepository $bookRepository, Request $request): Response
     {
 
@@ -96,7 +87,6 @@ class BookController extends AbstractController
         }
     }
 
-    #[Route('/titleAndAvailability', name: 'app_book_find_with_name_and_copies', methods: ['GET'])]
     public function findByTitleAndAvailability(BookRepository $bookRepository, Request $request): Response
     {
         $decoded = $this->decodeRequest($request);
@@ -116,7 +106,6 @@ class BookController extends AbstractController
         }
     }
 
-    #[Route('/titleAndLibrary', name: 'app_book_find_with_title_and_library', methods: ['GET'])]
     public function findByTitleAndLibrary(BookRepository $bookRepository, Request $request): Response
     {
         $decoded = $this->decodeRequest($request);
@@ -138,7 +127,6 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/publisherAndLibrary', name: 'app_book_find_with_publisher_and_library', methods: ['GET'])]
     public function findByPublisherAndLibrary(BookRepository $bookRepository, Request $request): Response
     {
         $decoded = $this->decodeRequest($request);
@@ -160,7 +148,6 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/authorAndLibrary', name: 'app_book_find_with_author_and_library', methods: ['GET'])]
     public function findByAuthorAndLibrary(BookRepository $bookRepository, Request $request): Response
     {
         $decoded = $this->decodeRequest($request);
@@ -182,7 +169,6 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_book_find_with_id', methods: ['GET'])]
     public function findById(BookRepository $bookRepository, string $id): Response
     {
         return $this->render('book/show.html.twig', [
@@ -193,7 +179,6 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_book_delete', methods: ['POST', 'DELETE'])]
     public function delete(Request $request, Book $book, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $book->getId(), $request->getPayload()->get('_token'))) {
@@ -204,7 +189,6 @@ class BookController extends AbstractController
         return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}/edit', name: 'app_book_edit', methods: ['GET', 'PUT'])]
     public function edit(Request $request, Book $book, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(BookType::class, $book, [
