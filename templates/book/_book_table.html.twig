@@ -1,0 +1,58 @@
+<div class="container-fluid w-75 rounded-4 bg-light p-4 position-relative overflow-y-auto">
+    <h1 class="mb-4">{{ searchTitle }}</h1>
+    <table class="table table-bordered table-striped mb-5">
+        <thead>
+        <tr>
+            <th class="col-1" colspan="1">Id</th>
+            <th class="col-1" colspan="1">Título</th>
+            <th class="col-1" colspan="1">Autor</th>
+            <th class="col-3" colspan="1">Sinopsis</th>
+            <th class="col-1" colspan="1">Fecha de publicación</th>
+            <th class="col-1" colspan="1">Editorial</th>
+            <th class="col-1" colspan="1">Código ISBN</th>
+            <th class="col-1" colspan="1">Existencias</th>
+            <th class="col-2" colspan="1">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for book in books %}
+            <tr>
+                <td>{{ book.id }}</td>
+                <td>
+                    <p class="d-inline-block text-truncate text-wrap text-break" style="max-height: 100px; width: 100px;">
+                        {{ book.title }}
+                    </p>
+
+                </td>
+                <td>
+                    <p class="d-inline-block text-truncate text-wrap text-break" style="max-height: 100px; width: 100px;">
+                        {{ book.author }}
+                    </p>
+
+                </td>
+                <td>
+                    <p class="d-inline-block text-truncate text-wrap text-break" style="max-height: 100px; width: 200px;">
+                    {{ book.synopsis }}
+                    </p>
+
+                </td>
+                <td>{{ book.publishDate ? book.publishDate|date('Y-m-d') : '' }}</td>
+                <td>{{ book.publisher }}</td>
+                <td>{{ book.ISBN }}</td>
+                <td>{{ book.copies }}</td>
+                <td style="width: 300px;">
+                    <a href="{{ path('findBookByTitleSlug', {'title': book.title})}}" class="btn btn-primary w-75">Mostrar</a>
+                    <a href="{{ path('editBook', {'id': book.id}) }}" class="btn btn-warning w-75 ">Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-outline-secondary position-absolute bottom-0 start-50 translate-middle-x mb-2"
+       href="{{ path('booksIndex') }}">Volver al listado</a>
+
+</div>

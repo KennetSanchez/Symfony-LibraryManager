@@ -14,7 +14,6 @@ class Book
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Assert\NotNull]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -45,7 +44,6 @@ class Book
     private ?string $synopsis = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Assert\NotNull]
     private ?DateTimeInterface $publishDate = null;
 
     #[ORM\Column(length: 255)]

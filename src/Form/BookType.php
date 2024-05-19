@@ -20,35 +20,43 @@ class BookType extends AbstractType
         $builder
             ->add('title', TextType::class, [
                 'required' => true,
-                'empty_data' => 'Entre fantasmas'
+                'empty_data' => 'Entre fantasmas',
+                'label' => 'Título'
             ])
 
             ->add('author', TextType::class, [
                 'required' => true,
-                'empty_data' => 'Fernando Vallejo Rendón'
+                'empty_data' => 'Fernando Vallejo Rendón',
+                'label' => 'Autor'
             ])
             ->add('synopsis', TextareaType::class, [
                 'required' => true,
-                'empty_data' => 'Novela que narra la vida del autor desde que se mudó a México'
+                'empty_data' => 'Novela que narra la vida del autor desde que se mudó a México',
+                'label' => 'Sinopsis'
             ])
             ->add('publishDate', DateType::class, [
                 'widget' => 'single_text',
+                'label' => 'Fecha de publicación'
             ])
             ->add('publisher', TextType::class, [
                 'required' => true,
-                'empty_data' => 'Alfaguara'
+                'empty_data' => 'Alfaguara',
+                'label' => 'Editorial'
             ])
             ->add('ISBN', IntegerType::class, [
                 'required' => true,
-                'empty_data' => '958-614-378-3'
+                'empty_data' => '958-614-378-3',
+                'label' => 'Código ISBN'
             ])
             ->add('copies', IntegerType::class, [
                 'required' => true,
-                'empty_data' => '999'
+                'empty_data' => '999',
+                'label' => 'Existencias'
             ])
             ->add('library', EntityType::class, [
                 'class' => Library::class,
                 'choice_label' => 'name',
+                'label' => 'Biblioteca'
             ])
         ;
     }

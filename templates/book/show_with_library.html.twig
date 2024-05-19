@@ -1,62 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Libros con disponibilidad{% endblock %}
+{% block title %}{{ searchTitle }}{% endblock %}
 
 {% block body %}
-    <h1>{{ searchTitle }}</h1>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Synopsis</th>
-            <th>PublishDate</th>
-            <th>Publisher</th>
-            <th>ISBN</th>
-            <th>Copies</th>
-            <th>Nombre biblioteca</th>
-            <th>Dirección biblioteca</th>
-            <th>Horario apertura</th>
-            <th>Horario cierre</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for result in queryResult %}
+    <div class="container-fluid w-75 rounded-4 bg-light p-4 position-relative">
+        <h1 class="mb-4">{{ searchTitle }}</h1>
+        <table class="table table-bordered table-striped mb-5">
+            <thead>
             <tr>
-                <td>{{ result.id }}</td>
-                <td>{{ result.title }}</td>
-                <td>{{ result.author }}</td>
-                <td>{{ result.synopsis }}</td>
-                <td>{{ result.publishDate ? result.publishDate|date('Y-m-d') : '' }}</td>
-                <td>{{ result.publisher }}</td>
-                <td>{{ result.ISBN }}</td>
-                <td>{{ result.copies }}</td>
-                <td>{{ result.library.name }}</td>
-                <td>{{ result.library.address }}</td>
-                <td>{{ result.library.openTime is empty ? "" : result.library.openTime | date("H:i") }}</td>
-                <td>{{ result.library.closeTime is empty ? "" : result.library.closeTime| date("H:i") }}</td>
-                <td>
-                    <a href="{{ path('app_book_find_with_title', {'title': result.title}) }}">show</a>
-                    <a href="{{ path('app_book_edit', {'id': result.id}) }}">edit</a>
-                </td>
-
-
+                <th>Id</th>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Sinopsis</th>
+                <th>Fecha de publicación</th>
+                <th>Editorial</th>
+                <th>ISBN</th>
+                <th>Existencias</th>
+                <th>Nombre biblioteca</th>
+                <th>Dirección biblioteca</th>
+                <th>Horario biblioteca</th>
+                <th>Acciones</th>
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="13">No hay libros disponibles con el título proporcionado</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for book in books %}
+                <tr>
+                    <td>{{ book.id }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>
+                        <p class="d-inline-block text-truncate text-wrap text-break" style="max-height: 100px; width: 200px;">
+                            {{ book.synopsis }}
+                        </p>
+                    </td>
+                    <td>{{ book.publishDate ? book.publishDate|date('Y-m-d') : '' }}</td>
+                    <td>{{ book.publisher }}</td>
+                    <td>{{ book.ISBN }}</td>
+                    <td>{{ book.copies }}</td>
+                    <td>{{ book.library.name }}</td>
+                    <td>{{ book.library.address }}</td>
+                    <td>{{ book.library.openTime | date("H:i") }} - {{ book.library.closeTime| date("H:i")  }}</td>
+                    <td>
+                        <a href="{{ path('findBookByTitle', {'title': book.title}) }}" class="btn btn-primary">Mostrar</a>
+                        <a href="{{ path('editBook', {'id': book.id}) }}" class="btn btn-warning">Editar</a>
+                        {{ include('book/_delete_form.html.twig', {'book':book, 'button_label': 'Eliminar'}) }}
+
+                    </td>
 
 
-    {#    <a href="{{ path('app_book_index') }}">back to list</a>#}
+                </tr>
+            {% else %}
+                <tr>
+                    <td class="text-center" colspan="13">No hay libros disponibles con el título proporcionado</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a class="btn btn-outline-secondary position-absolute bottom-0 start-50 translate-middle-x mb-2"
+           href="{{ path('booksIndex') }}">Volver al listado</a>
+    </div>
 
-    {#    #}
 
-    {#    {{ include('book/_delete_form.html.twig') }}#}
 {% endblock %}

@@ -8,12 +8,13 @@ use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use ErrorException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/books')]
 class BookController extends AbstractController
 {
     private function decodeRequest(Request $request)
@@ -22,10 +23,29 @@ class BookController extends AbstractController
         return json_decode($content);
     }
 
-    public function booksIndex(BookRepository $bookRepository): Response
+    public function booksIndex(Request $request, BookRepository $bookRepository): Response
     {
+
+        $form = $this->createFormBuilder(null)
+            ->add('title', TextType::class, ['label' => 'Nombre'])
+            ->add('search', SubmitType::class, ['label' => 'Buscar libro'])
+            ->getForm();
+
+
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $title = $form->getData()['title'];
+            return $this->render('book/show_with_library.html.twig', [
+                'searchTitle' => 'Libros con título: '.$title,
+                'books' => $bookRepository->findBy(['title'=>$title])
+            ]);
+        }
+
         return $this->render('book/index.html.twig', [
             'books' => $bookRepository->findAll(),
+            'form' => $form
         ]);
     }
 
@@ -42,7 +62,7 @@ class BookController extends AbstractController
             $entityManager->persist($book);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('booksIndex', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('book/new.html.twig', [
@@ -67,19 +87,21 @@ class BookController extends AbstractController
         }
     }
 
-    public function findByTitle(BookRepository $bookRepository, Request $request): Response
+    public function findByTitle(BookRepository $bookRepository, Request $request, string $title = ''): Response
     {
 
-        $decoded = $this->decodeRequest($request);
-
         try {
-            $title = $decoded->title;
+            if(!$title){
+                $decoded = $this->decodeRequest($request);
+                $title = $decoded->title;
+            }
+
             $criteria = ['title' => $title];
             $books = $bookRepository->findBy($criteria);
 
-            return $this->render('book/show.html.twig', [
+            return $this->render('book/show_with_library.html.twig', [
                 'books' => $books,
-                'searchType' => sprintf('Libros con título %s', $title),
+                'searchTitle' => sprintf('Libros con título: %s', $title),
             ]);
 
         } catch (ErrorException $exception) {
@@ -186,7 +208,7 @@ class BookController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('booksIndex', [], Response::HTTP_SEE_OTHER);
     }
 
     public function edit(Request $request, Book $book, EntityManagerInterface $entityManager): Response
@@ -200,7 +222,7 @@ class BookController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('booksIndex', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('book/edit.html.twig', [

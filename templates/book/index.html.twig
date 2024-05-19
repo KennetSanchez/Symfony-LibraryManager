@@ -1,47 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Book index{% endblock %}
+{% block title %}Libros{% endblock %}
 
-{% block body %}
-    <h1>Book index</h1>
+    {% block body %}
+            <div class="container-fluid w-75 px-4">
+               <div class="w-25">
+                   {{ form(form) }}
+                </div>
+            </div>
+                {{ include('book/_book_table.html.twig', {'books':books, 'searchTitle':'Listado de libros'}) }}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Synopsis</th>
-                <th>PublishDate</th>
-                <th>Publisher</th>
-                <th>ISBN</th>
-                <th>Copies</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for book in books %}
-            <tr>
-                <td>{{ book.id }}</td>
-                <td>{{ book.title }}</td>
-                <td>{{ book.author }}</td>
-                <td>{{ book.synopsis }}</td>
-                <td>{{ book.publishDate ? book.publishDate|date('Y-m-d') : '' }}</td>
-                <td>{{ book.publisher }}</td>
-                <td>{{ book.ISBN }}</td>
-                <td>{{ book.copies }}</td>
-                <td>
-                    <a href="{{ path('app_book_find_with_id', {'id': book.id}) }}">show</a>
-                    <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_book_new') }}">Create new</a>
 {% endblock %}
+

@@ -55,60 +55,73 @@ deleteLibrary:
 
 booksIndex:
     path: /books/
-    methods: [GET]
-    controller: App\Controller\BookController:booksIndex
+    methods: [GET, POST]
+    controller: App\Controller\BookController::booksIndex
 
 
 findBookByLibrary:
     path: /books/library
     methods: [GET]
-    controller: App\Controller\BookController:findByLibrary
+    controller: App\Controller\BookController::findByLibrary
 
 
 newBook:
     path: /books/new
     methods: [GET, POST]
-    controller: App\Controller\BookController:newBook
+    controller: App\Controller\BookController::newBook
 
 findBookByTitle:
     path: /books/title
     methods: [GET]
-    controller: App\Controller\BookController:findByTitle
+    controller: App\Controller\BookController::findByTitle
+
+findBookByTitleSlug:
+    path: /books/title/{title}
+    methods: [GET]
+    controller: App\Controller\BookController::findByTitle
+    requirements:
+        title: '[\w\s]+'
 
 findBookByTitleAndAvailability:
     path: /books/titleAndAvailability
     methods: [GET]
-    controller: App\Controller\BookController:findByTitleAndAvailability
+    controller: App\Controller\BookController::findByTitleAndAvailability
 
 findBookByTitleAndLibrary:
     path: /books/titleAndLibrary
     methods: [GET]
-    controller: App\Controller\BookController:findByTitleAndLibrary
+    controller: App\Controller\BookController::findByTitleAndLibrary
 
 findBookByPublisherAndLibrary:
     path: /books/publisherAndLibrary
     methods: [GET]
-    controller: App\Controller\BookController:findByPublisherAndLibrary
+    controller: App\Controller\BookController::findByPublisherAndLibrary
 
 findBookByAuthorAndLibrary:
     path: /books/authorAndLibrary
     methods: [GET]
-    controller: App\Controller\BookController:findByAuthorAndLibrary
+    controller: App\Controller\BookController::findByAuthorAndLibrary
 
 findBookById:
     path: /books/{id}
     methods: [GET]
-    controller: App\Controller\BookController:findById
+    controller: App\Controller\BookController::findById
+    requirements:
+        id: \d+
 
 deleteBook:
     path: /books/{id}
     methods: [POST, DELETE]
-    controller: App\Controller\BookController:delete
+    controller: App\Controller\BookController::delete
+    requirements:
+        id: \d+
 
 editBook:
     path: /books/{id}/edit
     methods: [GET, PUT]
-    controller: App\Controller\BookController:edit
+    controller: App\Controller\BookController::edit
+    requirements:
+        id: \d+
 
 
 

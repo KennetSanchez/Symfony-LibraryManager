@@ -4,49 +4,5 @@
 
 {% block body %}
     <h1>{{ searchType }}</h1>
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Synopsis</th>
-            <th>PublishDate</th>
-            <th>Publisher</th>
-            <th>ISBN</th>
-            <th>Copies</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for book in books %}
-            <tr>
-                <td>{{ book.id }}</td>
-                <td>{{ book.title }}</td>
-                <td>{{ book.author }}</td>
-                <td>{{ book.synopsis }}</td>
-                <td>{{ book.publishDate ? book.publishDate|date('Y-m-d') : '' }}</td>
-                <td>{{ book.publisher }}</td>
-                <td>{{ book.ISBN }}</td>
-                <td>{{ book.copies }}</td>
-                <td>
-                    <a href="{{ path('app_book_find_with_title', {'title': book.title}) }}">show</a>
-                    <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">No hay libros con el título proporcionado</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-
-{#    <a href="{{ path('app_book_index') }}">back to list</a>#}
-
-{#    #}
-
-{#    {{ include('book/_delete_form.html.twig') }}#}
+    {{ include('book/_book_table.html.twig', {'books':books}) }}
 {% endblock %}
