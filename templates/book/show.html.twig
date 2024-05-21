@@ -3,6 +3,5 @@
 {% block title %}Libros{% endblock %}
 
 {% block body %}
-    <h1>{{ searchType }}</h1>
-    {{ include('book/_book_table.html.twig', {'books':books}) }}
+    {{ include('book/_book_table.html.twig', {'books':books, 'isMain': false, 'searchTitle':searchType}) }}
 {% endblock %}

@@ -41,18 +41,22 @@
                 <td>{{ book.ISBN }}</td>
                 <td>{{ book.copies }}</td>
                 <td style="width: 300px;">
-                    <a href="{{ path('findBookByTitleSlug', {'title': book.title})}}" class="btn btn-primary w-75">Mostrar</a>
+                    <a href="{{ path('findBookById', {'id': book.id})}}" class="btn btn-primary w-75">Mostrar</a>
                     <a href="{{ path('editBook', {'id': book.id}) }}" class="btn btn-warning w-75 ">Editar</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="9">No hay libros asociados a esta biblioteca </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-outline-secondary position-absolute bottom-0 start-50 translate-middle-x mb-2"
-       href="{{ path('booksIndex') }}">Volver al listado</a>
-
+    {% if(isMain)%}
+        <a class="btn btn-primary position-absolute bottom-0 start-50 translate-middle-x mb-2"
+           href="{{path('newBook')}}">Agregar libro</a>
+    {% else %}
+        <a class="btn btn-outline-secondary position-absolute bottom-0 start-50 translate-middle-x mb-2"
+           href="{{ path('booksIndex') }}">Volver al listado</a>
+    {% endif %}
 </div>

@@ -8,7 +8,7 @@
                    {{ form(form) }}
                 </div>
             </div>
-                {{ include('book/_book_table.html.twig', {'books':books, 'searchTitle':'Listado de libros'}) }}
+                {{ include('book/_book_table.html.twig', {'books':books, 'isMain': true, 'searchTitle':'Listado de libros'}) }}
 
 {% endblock %}
 

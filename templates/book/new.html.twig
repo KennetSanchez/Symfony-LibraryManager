@@ -3,7 +3,10 @@
 {% block title %}Agregar libro{% endblock %}
 
 {% block body %}
-    <h1>Agregar nuevo libro</h1>
-
-    {{ include('book/_form.html.twig', {'button_label':'Crear'}) }}
+    <div class="w-100 p-4 justify-content-center d-flex justify-content-center">
+        <div style="padding: 2% 8% 2% 8%; width: 80%" class="bg-light">
+            <h1>Agregar nuevo libro</h1>
+            {{ include('book/_form.html.twig', {'button_label':'Crear'}) }}
+        </div>
+    </div>
 {% endblock %}

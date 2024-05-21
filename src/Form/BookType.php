@@ -12,6 +12,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class BookType extends AbstractType
 {
@@ -51,7 +54,10 @@ class BookType extends AbstractType
             ->add('copies', IntegerType::class, [
                 'required' => true,
                 'empty_data' => '999',
-                'label' => 'Existencias'
+                'label' => 'Existencias',
+                'constraints' => [
+                    new GreaterThanOrEqual(0, message: 'Las unidades no pueden ser inferiores  a 0')
+                ]
             ])
             ->add('library', EntityType::class, [
                 'class' => Library::class,
@@ -63,6 +69,7 @@ class BookType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+
         $resolver->setDefaults([
             'data_class' => Book::class,
         ]);
