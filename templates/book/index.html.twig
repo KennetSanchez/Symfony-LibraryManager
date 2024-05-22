@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Libros{% endblock %}
+
+    {% block body %}
+            <div class="container-fluid w-75 px-4">
+               <div class="w-25">
+                   {{ form(form) }}
+                </div>
+            </div>
+                {{ include('book/_book_table.html.twig', {'books':books, 'isMain': true, 'searchTitle':'Listado de libros'}) }}
+
+{% endblock %}
+

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Book index{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mb-5">Libros de {{ library.name }}</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Sinopsis</th>
+                <th>Fecha de publicación</th>
+                <th>Editora</th>
+                <th>ISBN</th>
+                <th>Copias disponibles</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for book in books %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.synopsis }}</td>
+                    <td>{{ book.publishDate ? book.publishDate|date('Y-m-d') : '' }}</td>
+                    <td>{{ book.publisher }}</td>
+                    <td>{{ book.ISBN }}</td>
+                    <td>{{ book.copies }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">No se encontraron registros</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

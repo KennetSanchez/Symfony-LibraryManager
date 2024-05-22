@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Libros{% endblock %}
+
+{% block body %}
+    {{ include('book/_book_table.html.twig', {'books':books, 'isMain': false, 'searchTitle':searchType}) }}
+{% endblock %}

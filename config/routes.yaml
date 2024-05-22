@@ -3,3 +3,129 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+# Rutas de Biblioteca
+index:
+    path: /
+    methods: [GET, POST]
+    controller: App\Controller\LibraryController::index
+
+showLibraryById:
+    path: /library/{id}
+    methods: [GET]
+    controller: App\Controller\LibraryController::showLibraryById
+    requirements:
+        id: \d+
+
+showBooksLibrary:
+    path: /library/{id}/books
+    methods: [GET]
+    controller: App\Controller\LibraryController::showBooksLibrary
+    requirements:
+        id: \d+
+
+indexAdminLibraries:
+    path: /admin/library/
+    methods: [GET]
+    controller: App\Controller\LibraryController::indexAdminLibraries
+
+newLibrary:
+    path: /admin/library/new
+    methods: [GET, POST]
+    controller: App\Controller\LibraryController::newLibrary
+
+showAdminLibraryById:
+    path: /admin/library/{id}
+    methods: [GET]
+    controller: App\Controller\LibraryController::showAdminLibraryById
+    requirements:
+        id: \d+
+
+editLibrary:
+    path: /admin/library/{id}/edit
+    methods: [GET, POST]
+    controller: App\Controller\LibraryController::editLibrary
+
+deleteLibrary:
+    path: /admin/library/{id}
+    methods: [POST]
+    controller: App\Controller\LibraryController::deleteLibrary
+
+# Books endpoints
+
+booksIndex:
+    path: /books/
+    methods: [GET, POST]
+    controller: App\Controller\BookController::booksIndex
+
+
+findBookByLibrary:
+    path: /books/library
+    methods: [GET]
+    controller: App\Controller\BookController::findByLibrary
+
+
+newBook:
+    path: /books/new
+    methods: [GET, POST]
+    controller: App\Controller\BookController::newBook
+
+findBookByTitle:
+    path: /books/title
+    methods: [GET]
+    controller: App\Controller\BookController::findByTitle
+
+findBookByTitleSlug:
+    path: /books/title/{title}
+    methods: [GET]
+    controller: App\Controller\BookController::findByTitle
+    requirements:
+        title: '[\w\s]+'
+
+findBookByTitleAndAvailability:
+    path: /books/titleAndAvailability
+    methods: [GET]
+    controller: App\Controller\BookController::findByTitleAndAvailability
+
+findBookByTitleAndLibrary:
+    path: /books/titleAndLibrary
+    methods: [GET]
+    controller: App\Controller\BookController::findByTitleAndLibrary
+
+findBookByPublisherAndLibrary:
+    path: /books/publisherAndLibrary
+    methods: [GET]
+    controller: App\Controller\BookController::findByPublisherAndLibrary
+
+findBookByAuthorAndLibrary:
+    path: /books/authorAndLibrary
+    methods: [GET]
+    controller: App\Controller\BookController::findByAuthorAndLibrary
+
+findBookById:
+    path: /books/{id}
+    methods: [GET]
+    controller: App\Controller\BookController::findById
+    requirements:
+        id: \d+
+
+deleteBook:
+    path: /books/{id}
+    methods: [POST, DELETE]
+    controller: App\Controller\BookController::delete
+    requirements:
+        id: \d+
+
+editBook:
+    path: /books/{id}/edit
+    methods: [GET, PUT]
+    controller: App\Controller\BookController::edit
+    requirements:
+        id: \d+
+
+
+
+
+
+
+

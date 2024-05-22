@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Library{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mb-4">Registrar nueva biblioteca</h1>
+
+        {{ include('admin/admin-library/_form.html.twig') }}
+
+        <a href="{{ path('indexAdminLibraries') }}" class="btn btn-secondary" >Volver al listado</a>
+    </div>
+{% endblock %}

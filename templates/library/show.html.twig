@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ library.name }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>{{ library.name }}</h1>
+
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Dirección</th>
+                <td>{{ library.address }}</td>
+            </tr>
+            <tr>
+                <th>Ciudad</th>
+                <td>{{ library.city }}</td>
+            </tr>
+            <tr>
+                <th>Hora de apertura</th>
+                <td>{{ library.openTime ? library.openTime|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Hora de cierre</th>
+                <td>{{ library.closeTime ? library.closeTime|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fecha de fundación</th>
+                <td>{{ library.foundationDate ? library.foundationDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Normas de biblioteca</th>
+                <td>{{ library.libraryRules }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('index') }}" class="btn btn-secondary">Volver al listado</a>
+        <a href="{{ path('showLibraryBooks', { 'id': library.id }) }}" class="btn btn-primary" >Ver libros</a>
+    </div>
+
+{% endblock %}
