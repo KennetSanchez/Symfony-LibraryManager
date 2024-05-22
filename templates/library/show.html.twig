@@ -3,10 +3,11 @@
 {% block title %}{{ library.name }}{% endblock %}
 
 {% block body %}
-    <h1>{{ library.name }}</h1>
+    <div class="container">
+        <h1>{{ library.name }}</h1>
 
-    <table class="table">
-        <tbody>
+        <table class="table">
+            <tbody>
             <tr>
                 <th>Dirección</th>
                 <td>{{ library.address }}</td>
@@ -31,10 +32,11 @@
                 <th>Normas de biblioteca</th>
                 <td>{{ library.libraryRules }}</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <a href="{{ path('index') }}" class="btn btn-secondary">Volver al listado</a>
-    <a href="{{ path('showBooksLibrary', { 'id': library.id }) }}" class="btn btn-primary" >Ver libros</a>
+        <a href="{{ path('index') }}" class="btn btn-secondary">Volver al listado</a>
+        <a href="{{ path('showLibraryBooks', { 'id': library.id }) }}" class="btn btn-primary" >Ver libros</a>
+    </div>
 
 {% endblock %}

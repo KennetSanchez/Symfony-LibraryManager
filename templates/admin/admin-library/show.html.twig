@@ -3,10 +3,11 @@
 {% block title %}Library{% endblock %}
 
 {% block body %}
-    <h1>Library</h1>
+    <div class="container">
+        <h1>Library</h1>
 
-    <table class="table">
-        <tbody>
+        <table class="table">
+            <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ library.id }}</td>
@@ -39,12 +40,13 @@
                 <th>LibraryRules</th>
                 <td>{{ library.libraryRules }}</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <a href="{{ path('indexAdminLibraries') }}" class="btn btn-secondary">Volver al listado</a>
+        <a href="{{ path('indexAdminLibraries') }}" class="btn btn-secondary">Volver al listado</a>
 
-    <a href="{{ path('editLibrary', {'id': library.id}) }}" class="btn btn-warning">Editar</a>
+        <a href="{{ path('editLibrary', {'id': library.id}) }}" class="btn btn-warning">Editar</a>
 
-    {{ include('admin/admin-library/_delete_form.html.twig') }}
+        {{ include('admin/admin-library/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
