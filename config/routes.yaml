@@ -17,10 +17,10 @@ showLibraryById:
     requirements:
         id: \d+
 
-showBooksLibrary:
+showLibraryBooks:
     path: /library/{id}/books
     methods: [GET]
-    controller: App\Controller\LibraryController::showBooksLibrary
+    controller: App\Controller\LibraryController::showLibraryBooks
     requirements:
         id: \d+
 

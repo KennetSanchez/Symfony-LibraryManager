@@ -153,7 +153,7 @@ class LibraryController extends AbstractController
         ]);
     }
 
-    public function showBooksLibrary(int $id, LibraryRepository $libraryRepository, EntityManagerInterface $entityManager): Response
+    public function showLibraryBooks(int $id, LibraryRepository $libraryRepository, EntityManagerInterface $entityManager): Response
     {
 
         $query = $entityManager->createQuery(
